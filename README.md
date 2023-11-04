@@ -1,2 +1,4 @@
-# Ubuntu-Driver-Assistant
-An easy way to install Drivers and Libraryes for Ubuntu and Ubuntu Flavours.
+# Driver Assistant
+An easy way to install drivers and libraries for Debian and its derivatives.
+
+![screenshot](./screenshots/screenshot.png)

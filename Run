@@ -1,2 +1,2 @@
 #!/bin/bash
-python3 "Ubuntu Driver Assistant.py"
+python3 "Driver Assistant.py"
