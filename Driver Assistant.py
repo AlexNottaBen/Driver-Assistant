@@ -1,0 +1,106 @@
+#! /usr/bin/python3
+# -*- coding: utf-8 -*-
+import os
+import sys
+
+from getpass import getpass
+
+def Wait():
+    input("Press any key to continue... ")
+
+def SimpleInstall(RootPassword,ProgrammeName):
+    os.system('echo %s|sudo -S %s' % (RootPassword, "sudo apt install " + ProgrammeName + " --yes"))
+
+def DoThis(RootPassword,Command):
+    os.system('echo %s|sudo -S %s' % (RootPassword,Command))
+
+def WhatItIs(About):
+    print("====================" + About + " ====================")
+
+def UpdatePackege(RootPassword):
+    print("==================== Update ====================")
+    os.system('echo %s|sudo -S %s' % (RootPassword, "sudo apt update"))
+
+def UpgradePackege(RootPassword):
+    print("==================== Upgrade ====================")
+    os.system('echo %s|sudo -S %s' % (RootPassword, "sudo apt upgrade --yes"))
+
+def Logo():
+    print("######################################")
+    print("#          Driver Assistant          #")
+    print("######################################")
+    print("By Alexander")
+    print("Support: Debian 10-12, Ubuntu 20.04+")
+
+def ClearScreen():
+    os.system("clear")
+
+#Begin
+
+ClearScreen()
+Logo()
+RootPassword = input("Input Root Password > ")
+
+while True:
+
+    ClearScreen()
+    Logo()
+
+    print("0 - Exit")
+    print("r - Open Repositories List")
+    print("1 - [Free] Install Software For Bluetooth")
+    print("2 - AMD / Intel Driver Only")
+    print("3 - Install Vulkan Libraryes Only")
+    print("4 - NVIDIA Driver")
+    print("5 - AMD / Intel Driver Only")
+    print("6 - Install Vulkan Libraryes Only")
+    print("7 - Install All Driveres (1 - 2)")
+    print("8 - Delete NVIDIA Driver")
+
+    Answer = input("Answer > ")
+
+    print("================= Start =================")
+
+    if Answer == "0":
+        exit(0)
+
+    elif Answer == "r":
+        SimpleInstall(RootPassword,"mousepad")
+        DoThis(RootPassword,"sudo mousepad /etc/apt/sources.list")
+
+    if Answer == "1":
+        DoThis(RootPassword,"sudo apt install bluetooth bluez bluez-cups bluez-tools btscanner gnome-bluetooth pulseaudio-module-bluetooth --yes")
+        DoThis(RootPassword,"lsmod | grep bluetooth")
+        DoThis(RootPassword,"/etc/init.d/bluetooth status")
+        DoThis(RootPassword,"/etc/init.d/bluetooth start")
+        DoThis(RootPassword,"sudo apt install blueman --yes")
+
+    elif Answer == "2":
+        DoThis(RootPassword,"sudo apt update && sudo apt upgrade && sudo apt install libgl1-mesa-dri:i386 mesa-vulkan-drivers mesa-vulkan-drivers:i386 --yes")
+
+    elif Answer == "3":
+        DoThis(RootPassword,"sudo dpkg --add-architecture i386 && sudo apt update && sudo apt upgrade && sudo apt install libvulkan1 libvulkan1:i386 --yes")
+
+    # Ubuntu
+
+    elif Answer == "4":
+        Version = input("Version > ")
+        DoThis(RootPassword,"sudo add-apt-repository ppa:graphics-drivers/ppa && sudo dpkg --add-architecture i386 && sudo apt update && sudo apt install -y nvidia-driver-" + Version + " libvulkan1 libvulkan1:i386 --yes")
+
+    elif Answer == "5":
+        DoThis(RootPassword,"sudo add-apt-repository ppa:kisak/kisak-mesa && sudo dpkg --add-architecture i386 && sudo apt update && sudo apt upgrade && sudo apt install libgl1-mesa-dri:i386 mesa-vulkan-drivers mesa-vulkan-drivers:i386 --yes")
+
+    elif Answer == "6":
+        DoThis(RootPassword,"sudo dpkg --add-architecture i386 && sudo apt update && sudo apt upgrade && sudo apt install libvulkan1 libvulkan1:i386 --yes")
+
+    elif Answer == "7":
+        Version = input("Version > ")
+        DoThis(RootPassword,"sudo add-apt-repository ppa:graphics-drivers/ppa && sudo dpkg --add-architecture i386 && sudo apt update && sudo apt install -y nvidia-driver-" + Version + " libvulkan1 libvulkan1:i386 --yes")
+        DoThis(RootPassword,"sudo add-apt-repository ppa:kisak/kisak-mesa && sudo dpkg --add-architecture i386 && sudo apt update && sudo apt upgrade && sudo apt install libgl1-mesa-dri:i386 mesa-vulkan-drivers mesa-vulkan-drivers:i386 --yes")
+
+    elif Answer == "8":
+        Version = input("Version > ")
+        DoThis(RootPassword,"sudo apt purge nvidia-driver-" + Version + " --yes")
+
+    print("================= Finish =================")
+    Wait()
